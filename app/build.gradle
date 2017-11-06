@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion rootProject.setup.compileSdk
+    buildToolsVersion rootProject.setup.buildTools
 
     defaultConfig {
         applicationId "com.angelatech.yeyelive"
-        minSdkVersion 19
-        targetSdkVersion 23
-        versionCode 14
-        versionName "1.8.99"
+        minSdkVersion rootProject.setup.minSdk
+        targetSdkVersion rootProject.setup.targetSdk
+        versionCode rootProject.setup.vcode
+        versionName rootProject.setup.vname
         multiDexEnabled true
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "x86_64", "mips"
@@ -47,21 +47,22 @@ android {
         }
     }
 
-    android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                //这里修改apk文件名
-                def fileName = "yeye_live.apk"
-                output.outputFile = new File(outputFile.parent, fileName)
-            }
-        }
-    }
+//    android.applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            def outputFile = output.outputFile
+//            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                //这里修改apk文件名
+//                def fileName = "yeye_live.apk"
+//                output.outputFile = new File(outputFile.parent, fileName)
+//            }
+//        }
+//    }
 }
 
 repositories {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    google()
 }
 
 dependencies {
@@ -74,7 +75,7 @@ dependencies {
     compile project(':LibImageLoader')
     compile project(':LibGooglePay')
     compile project(':LibQiniu')
-    compile 'com.android.support:multidex:'
+    compile 'com.android.support:multidex:1.0.2'
     //定位用到
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.google.android.gms:play-services-maps:7.8.+'
